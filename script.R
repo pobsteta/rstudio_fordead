@@ -24,11 +24,9 @@ extent <- frt_data
 #' @title s2_list
 #'
 #' @param spatial_extent Spatial extent
-#' @param orbit Orbit
 #' @param time_interval Time interval
 #' @param time_period Time period
 #' @param level Level
-#' @param platform Plateform
 #' @param maxcloud Max cloud cover
 #' @param collection Collection
 #' @param path_to_download Path to the project
@@ -42,11 +40,9 @@ extent <- frt_data
 #' @importFrom theiaR TheiaCollection
 s2_list <- function(spatial_extent = NULL,
                     tiles = NULL,
-                    orbit = NULL, # spatial parameters
                     time_interval = NULL,
                     time_period = "full", # temporal parameters
                     level = "l2a",
-                    platform = "s2a",
                     maxcloud = 101,
                     collection = "SENTINEL",
                     path_to_download = "~",
@@ -102,16 +98,6 @@ s2_list <- function(spatial_extent = NULL,
     )
   }
 
-  # convert orbits to integer
-  if (is.null(orbit)) {
-    orb <- list(NULL)
-  } else {
-    orb <- as.integer(gsub(".(...)$", "\\1", orbit))
-    if (anyNA(orbit)) {
-      orb <- list(NULL)
-    }
-  }
-
   # set level
   lev <- switch(level,
     l1c = "LEVEL1C",
@@ -130,22 +116,6 @@ s2_list <- function(spatial_extent = NULL,
     "SENTINEL2"
   )
 
-  # set platform
-  pla <- switch(platform,
-    landsat5 = "LANDSAT5",
-    landsat7 = "LANDSAT7",
-    landsat8 = "LANDSAT8",
-    spot1 = "SPOT1",
-    spot2 = "SPOT2",
-    spot3 = "SPOT3",
-    spot4 = "SPOT4",
-    spot5 = "SPOT5",
-    s2a = "SENTINEL2A",
-    s2b = "SENTINEL2B",
-    venus = "VENUS",
-    "SENTINEL2A"
-  )
-
   # create a list containing the query
   if (level == "l3a") {
     myquery <- list(
@@ -161,7 +131,6 @@ s2_list <- function(spatial_extent = NULL,
   } else {
     myquery <- list(
       collection = col,
-      platform = pla,
       level = lev,
       latmin = latmi,
       latmax = latma,
@@ -215,14 +184,13 @@ s2_list <- function(spatial_extent = NULL,
 
 resu <- s2_list(
    spatial_extent = extent |> sf::st_transform(4326) |> sf::st_geometry(),
-   tiles = c("31TEN"),
+   tiles = c("31TFN"),
    time_interval = c("2015-01-01", "2022-12-31"),
    time_period = "full",
    level = "l2a",
-   platform = "s2a",
    maxcloud = 100,
    collection = "sentinel2",
-   path_to_download = "/home/rstudio/data/",
+   path_to_download = "/home/rstudio/data",
    project_name = "picea_abies",
    download = TRUE
  )  
