@@ -20,10 +20,8 @@ frt_data <- frt$getFeatures(Filter = filtre)
 ## Etendu de la zone d'étude
 extent <- frt_data
 
-  
 #' @title s2_list
 #'
-#' @param spatial_extent Spatial extent
 #' @param time_interval Time interval
 #' @param time_period Time period
 #' @param level Level
@@ -38,8 +36,7 @@ extent <- frt_data
 #' @export
 #'
 #' @importFrom theiaR TheiaCollection
-s2_list <- function(spatial_extent = NULL,
-                    tiles = NULL,
+s2_list <- function(tiles = NULL,
                     time_interval = NULL,
                     time_period = "full", # temporal parameters
                     level = "l2a",
@@ -54,29 +51,6 @@ s2_list <- function(spatial_extent = NULL,
   # https://sso.theia-land.fr/theia/register/register.xhtml
   theia_download <- find.package("theiaR")
   myauth <- file.path(theia_download, "auth_theia.txt")
-
-  if (is.null(spatial_extent)) {
-    message("Spatial_extent is NULL !")
-    return(NULL)
-  } else {
-    spatext <- spatial_extent |>
-      sf::st_geometry() |>
-      sf::st_bbox()
-  }
-
-  # pass lat,lon if the bounding box is a point or line; latmin,latmax,lonmin,
-  # lonmax if it is a rectangle
-  if (spatext["xmin"] == spatext["xmax"] || spatext["ymin"] == spatext["ymax"]) {
-    lon <- mean(spatext["xmin"], spatext["xmax"])
-    lat <- mean(spatext["ymin"], spatext["ymax"])
-    lonmi <- lonma <- latmi <- latma <- NULL
-  } else {
-    lonmi <- spatext["xmin"]
-    lonma <- spatext["xmax"]
-    latmi <- spatext["ymin"]
-    latma <- spatext["ymax"]
-    lon <- lat <- NULL
-  }
 
   # checks on dates
   # TODO add checks on format
@@ -120,22 +94,16 @@ s2_list <- function(spatial_extent = NULL,
   if (level == "l3a") {
     myquery <- list(
       collection = col,
+      tile = tiles,
       level = lev,
-      latmin = latmi,
-      latmax = latma,
-      lonmin = lonmi,
-      lonmax = lonma,
       start.date = time_intervals$start,
       end.date = time_intervals$end
     )
   } else {
     myquery <- list(
       collection = col,
+      tile = tiles,
       level = lev,
-      latmin = latmi,
-      latmax = latma,
-      lonmin = lonmi,
-      lonmax = lonma,
       start.date = time_intervals$start,
       end.date = time_intervals$end
     )
@@ -183,9 +151,8 @@ s2_list <- function(spatial_extent = NULL,
 }
 
 resu <- s2_list(
-   spatial_extent = extent |> sf::st_transform(4326) |> sf::st_geometry(),
-   tiles = c("31TFN"),
-   time_interval = c("2015-01-01", "2022-12-31"),
+   tiles = c("T31TGN"),
+   time_interval = c("2015-01-01", Sys.Date()),
    time_period = "full",
    level = "l2a",
    maxcloud = 100,
