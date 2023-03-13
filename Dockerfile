@@ -14,4 +14,11 @@ RUN $FOLDER/install_geospatial.sh
 RUN rm $FOLDER/install_geospatial.sh
 RUN rm $FOLDER/install2.r
 RUN mv $FOLDER/auth_theia.txt /usr/local/lib/R/site-library/theiaR/
+RUN pip install numpy fiona geopandas rasterio xarray scipy dask pathlib rioxarray path plotly netcdf4 matplotlib
+RUN git clone https://gitlab.com/fordead/fordead_package.git
+RUN cd fordead_package
+RUN pip install /home/rstudio/fordead_package
+
+
+
 

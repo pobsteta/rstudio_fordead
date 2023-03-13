@@ -42,7 +42,11 @@ apt_install \
     protobuf-compiler \
     sqlite3 \
     tk-dev \
-    unixodbc-dev
+    unixodbc-dev \
+    python3-distutils \
+    python3-pip \
+    python3-apt \
+    curl
 
 install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     RColorBrewer \
