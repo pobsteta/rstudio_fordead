@@ -1,6 +1,5 @@
 #' @title s2_list
 #'
-#' @param spatial_extent Spatial extent
 #' @param orbit Orbit
 #' @param time_interval Time interval
 #' @param time_period Time period
@@ -12,6 +11,7 @@
 #' @param tiles Tiles
 #' @param download Download
 #' @param project_name Project name
+#' @param extract Extract files
 #'
 #' @return List of products
 #' @export
@@ -27,7 +27,8 @@ s2_list <- function(tiles = NULL,
                     collection = "SENTINEL",
                     path_to_download = "~",
                     download = TRUE,
-                    project_name = NULL) {
+                    project_name = NULL,
+                    extract = FALSE) {
   # search theiaR path
   # myauth, ce fichier contient deux lignes, la premiere est l'ID pour
   # se connecter et la deuxieme, le mot de passe. inscription sur
@@ -105,8 +106,15 @@ s2_list <- function(tiles = NULL,
     } # end for
   } # endif
   
+  if (extract) {
+    files <- mycollection$status
+    tryCatch(mycollection$extract(dest.dir = file.path(path_to_download, project_name, "extract", tiles)),
+             error = function(e) message(paste(files$tile[f], "did not extracted !"))
+    )
+  } # endif
+  
   # affichage du statut des dalles a telecharger
-  return(out)
+  return(mycollection$status)
 }
 
 

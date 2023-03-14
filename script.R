@@ -51,7 +51,8 @@ resu <- s2_list(
   collection = "sentinel2",
   path_to_download = rep_in,
   project_name = species,
-  download = TRUE
+  download = TRUE,
+  extract = TRUE
 )
 
 # 1/ Step 1 - Calcul de l'indice de végétation et des masques :
