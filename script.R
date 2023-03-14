@@ -1,9 +1,11 @@
 ## variables input
 species <- "picea_abies"
-rep_in <- "/home/rstudio/data"
+rep_in <- "/media/pascal/orange/data"
 tuile <- "T31TGN"
 date_start <- "2018-01-01"
-date_end <- as.character(Sys.Date())
+# date_end <- as.character(Sys.Date())
+date_end <- "2018-03-31"
+source("s2_list.R")
 
 # Crée les répertoires
 dir.create(file.path(rep_in, species, "s2zip"), recursive = TRUE)
@@ -37,7 +39,20 @@ extent <- frt_data
 sf::write_sf(extent, file.path(rep_in, species, "extent.shp"))
 
 # 0/ Step 0 - chargement des data THEIA
-system(paste0("fordead theia_preprocess -i ", rep_in, "/", species, "/s2zip -o ", rep_in, "/", species, "/extract -t ", tuile, " --login_theia pascal.obstetar@gmail.com --password_theia Pobf6332! --start_date ", date_start, " --end_date ", date_end, " --lim_perc_cloud 45"))
+# system(paste0("fordead theia_preprocess -i ", rep_in, "/", species, "/s2zip -o ", rep_in, "/", species, "/extract -t ", tuile, " --login_theia pascal.obstetar@gmail.com --password_theia Pobf6332! --start_date ", date_start, " --end_date ", date_end, " --lim_perc_cloud 45"))
+resu <- s2_list(
+  tiles = c("T31TGN"),
+  # time_interval = c("2018-01-01", as.character(Sys.Date())),
+  time_interval = c(date_start, date_end),
+  level = "l2a",
+  platform = "s2a",
+  time_period = "full",
+  maxcloud = 45,
+  collection = "sentinel2",
+  path_to_download = rep_in,
+  project_name = species,
+  download = TRUE
+)
 
 # 1/ Step 1 - Calcul de l'indice de végétation et des masques :
 # system(paste0("fordead masked_vi -i ", rep_in, "/", species, "/extract -o ", rep_in, "/", species, "/calc -n -1 --interpolation_order 0 --sentinel_source THEIA --soil_detection --vi CRSWIR --ignored_period ['11-01','05-01']"))

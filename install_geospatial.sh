@@ -82,7 +82,8 @@ install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     geosphere \
     BiocManager \
     geometa \
-    ows4R 
+    ows4R \
+    theiaR
 
 R -e "BiocManager::install('rhdf5')"
 
