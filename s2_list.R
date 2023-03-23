@@ -116,28 +116,3 @@ s2_list <- function(tiles = NULL,
   # affichage du statut des dalles a telecharger
   return(mycollection$status)
 }
-
-
-# tiles = c("T31TGN")
-# time_interval = c("2018-01-01", as.character(Sys.Date()))
-# level = "l2a"
-# platform = "s2a"
-# time_period = "full"
-# maxcloud = 45
-# collection = "sentinel2"
-# path_to_download = "/media/pascal/orange/data/"
-# project_name = "picea_abies"
-# download = TRUE
-# 
-# resu <- s2_list(
-#   tiles = c("T31TGN"),
-#   time_interval = c("2018-01-01", as.character(Sys.Date())),
-#   level = "l2a",
-#   platform = "s2a",
-#   time_period = "full",
-#   maxcloud = 45,
-#   collection = "sentinel2",
-#   path_to_download = "/media/pascal/orange/data/",
-#   project_name = "picea_abies",
-#   download = TRUE
-# )
