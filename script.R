@@ -1,7 +1,7 @@
 ## variables input
 species <- "picea_abies"
 rep_in <- "/media/obstetar/orange/data"
-tuile <- "T31TGN"
+tuile <- "T32ULV"
 date_start <- "2018-01-01"
 # date_end <- "2018-05-01"
 date_end <- as.character(Sys.Date())
@@ -15,39 +15,14 @@ dir.create(file.path(rep_in, species, "calc"), recursive = TRUE, showWarnings = 
 dir.create(file.path(rep_in, species, "extract", "year"), recursive = TRUE, showWarnings = FALSE)
 dir.create(file.path(rep_in, species, "final", tuile), recursive = TRUE, showWarnings = FALSE)
 
-## Recuperation de la zone interet avec code FRT ONF
-# code foret a modifier pour le calul de la zone d'interet
-# Besançon
-fiidtn_frt <- c("F06040H")
-# Moidons
-# fiidtn_frt <- c("F07255A")
-
-## ows4R
-# Log to wfs frt ONF schema
-# Connexion au WFS
-wfs_frt <- ows4R::WFSClient$new(
-  url = "http://ws.carmencarto.fr/WFS/105/ONF_Forets",
-  serviceVersion = "2.0.0"
-)
-# Récupère in feature type (pour description, ou get features)
-frt <- wfs_frt$capabilities$findFeatureTypeByName("ms:FOR_PUBL_FR")
-
-# Créer les enregistrements avec filtre sur les objets ows4R
-# filtre <- ows4R::OGCFilter$new(do.call(ows4R::Or$new, lapply(fiidtn_frt, function(val) {
-#   ows4R::PropertyIsEqualTo$new("iidtn_frt", val)
-# })))
-filtre <- ows4R::OGCFilter$new(ows4R::PropertyIsEqualTo$new("iidtn_frt", fiidtn_frt))
-frt_data <- frt$getFeatures(Filter = filtre)
-
 ## Etendu de la zone d'étude
-extent <- frt_data
-# extent <- sf::read_sf(file.path(rep_in, species, "extent.shp"))
-
-sf::write_sf(extent, file.path(rep_in, species, "extent.shp"))
+# etendu <- sf::read_sf(file.path(rep_in, species, "etendu.shp"))
+## Enregistre la zone dans le reprtoire de travail
+# sf::write_sf(etendu, file.path(rep_in, species, "etendu.shp"))
 
 # 0/ Step 0 - chargement des data THEIA
 resu <- s2_list(
-  tiles = c("T31TGN"),
+  tiles = tuile,
   time_interval = c(date_start, date_end),
   level = "l2a",
   platform = "s2a",
