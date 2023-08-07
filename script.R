@@ -1,11 +1,11 @@
 ## variables input
 species <- "picea_abies"
-rep_in <- "/media/obstetar/orange/data"
+rep_in <- "~"
 tuile <- "T32ULV"
 date_start <- "2018-01-01"
-# date_end <- "2018-05-01"
-date_end <- as.character(Sys.Date())
-setwd("~/rstudio_fordead")
+date_end <- "2018-05-01"
+# date_end <- as.character(Sys.Date())
+# setwd("~/rstudio_fordead")
 source("s2_list.R")
 
 # Crée les répertoires
