@@ -1,8 +1,8 @@
-FROM rocker/rstudio:4.2.2
+FROM rocker/rstudio:4.3.1
 
 LABEL source="https://github.com/pobsteta/rstudio_fordead"
 
-MAINTAINER Pascal Obstetar <pascal.obstetar@gmail.com>
+LABEL maintainer="Pascal Obstetar <pascal.obstetar@gmail.com>"
 
 ENV FOLDER="/home/rstudio"
 COPY . $FOLDER
@@ -13,7 +13,6 @@ RUN chmod +x $FOLDER/install_geospatial.sh
 RUN $FOLDER/install_geospatial.sh
 RUN rm $FOLDER/install_geospatial.sh
 RUN rm $FOLDER/install2.r
-RUN mv $FOLDER/auth_theia.txt /usr/local/lib/R/site-library/theiaR
 RUN pip install numpy fiona geopandas rasterio xarray scipy dask pathlib rioxarray path plotly netcdf4 matplotlib
 RUN git clone https://gitlab.com/fordead/fordead_package.git
 RUN cd fordead_package
