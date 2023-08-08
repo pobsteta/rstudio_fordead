@@ -57,6 +57,7 @@ install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     gstat \
     hdf5r \
     lidR \
+    lubridate \
     mapdata \
     maptools \
     mapview \
