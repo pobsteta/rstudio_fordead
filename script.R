@@ -66,9 +66,7 @@ for (i in seq(lubridate::year(date_start), lubridate::year(date_start) + round(a
     message(paste("Calcul pour l'année", i, "partie", p, "/ 4"))
     # message(paste("Calcul pour l'année", i))
     # 1/ Step 1 - Calcul de l'indice de végétation et des masques :
-    # system(paste0("fordead masked_vi -i ", rep_in, "/", species, "/extract/year -o ", rep_in, "/", species, "/calc -n -1 --compress_vi --lim_perc_cloud 45 --interpolation_order 0 --sentinel_source THEIA --soil_detection --vi CRSWIR"))
-    system(paste0("fordead masked_vi -i ", rep_in, "/", species, "/extract/year -o ", rep_in, "/", species, "/calc/", tuile, "/", i, "/", p, " -n -1 --compress_vi --lim_perc_cloud 0.4 --interpolation_order 0 --sentinel_source THEIA --soil_detection --vi CRSWIR --extent_shape_path ", paste0("p", p, ".shp")))
-    # system(paste0("fordead masked_vi -i ", rep_in, "/", species, "/extract/year -o ", rep_in, "/", species, "/calc -n -1 --compress_vi --lim_perc_cloud 45 --interpolation_order 0 --sentinel_source THEIA --soil_detection --vi CRSWIR --extent_shape_path ", file.path(rep_in, species, "extent.shp")))
+    system(paste0("fordead masked_vi -i ", rep_in, "/", species, "/extract/year -o ", rep_in, "/", species, "/calc/", tuile, "/", i, "/", p, " --compress_vi --lim_perc_cloud 0.4 --interpolation_order 0 --sentinel_source THEIA --soil_detection --vi CRSWIR --extent_shape_path ", paste0("p", p, ".shp")))
     
     # 2/ Step 2 - Apprentissage du modèle :
     system(paste0("fordead train_model -o ", rep_in, "/", species, "/calc/", tuile, "/", i, "/", p, " --nb_min_date 10 --min_last_date_training ", date_start, " --max_last_date_training 2018-08-01"))
