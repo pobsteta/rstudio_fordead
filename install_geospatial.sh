@@ -24,6 +24,7 @@ apt_install \
     libgdal-dev \
     libgeos-dev \
     libgsl0-dev \
+    libsodium-dev \
     libgl1-mesa-dev \
     libglu1-mesa-dev \
     libhdf4-alt-dev \
