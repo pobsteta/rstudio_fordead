@@ -24,7 +24,6 @@ apt_install \
     libgdal-dev \
     libgeos-dev \
     libgsl0-dev \
-    libsodium-dev \
     libgl1-mesa-dev \
     libglu1-mesa-dev \
     libhdf4-alt-dev \
@@ -44,6 +43,7 @@ apt_install \
     sqlite3 \
     tk-dev \
     unixodbc-dev \
+    libsodium-dev \
     python3-distutils \
     python3-pip \
     python3-apt \
