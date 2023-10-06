@@ -5,7 +5,6 @@ tuile <- "T32ULV"
 date_start <- "2018-01-01"
 # date_end <- "2018-05-01"
 date_end <- as.character(Sys.Date())
-# setwd(rep_in)
 source("s2_list.R")
 
 # Crée les répertoires
@@ -19,19 +18,6 @@ dir.create(file.path(rep_in, species, "sensitivity", tuile), recursive = TRUE, s
 ## Recuperation de la zone interet avec code parcelle
 ## Etendu de la zone d'étude
 # etendu <- sf::read_sf(file.path(rep_in, species, "extent.gpkg"))
-
-# test
-# tiles = tuile
-# time_interval = c(date_start, date_end)
-# level = "l2a"
-# platform = "s2a"
-# time_period = "full"
-# maxcloud = 45
-# collection = "sentinel2"
-# path_to_download = rep_in
-# project_name = species
-# download = TRUE
-# extract = FALSE
 
 # 0/ Step 0 - chargement des data THEIA
 resu <- s2_list(
@@ -110,13 +96,6 @@ for (i in seq(lubridate::year(date_start), lubridate::year(date_start) + round(a
                              paste0(i, "_periodic_results_dieback.gpkg")), 
                    layer_options = c("OVERWRITE=yes")))
   
-  # res <- fs::dir_ls(file.path(rep_in, species, "final", tuile, i), recurse = TRUE, glob = "*k.shp") |> 
-  #   tibble::tibble() 
-  #   dplyr::mutate(data = purrr::map(fname, read_sf)) |>
-  #   tidyr::unnest(data) |>
-  #   sf::st_as_sf() |>
-  #   sf::st_set_crs(2154)
-  
 }
 
 # recopie tout de nouveau dans la tuile
@@ -178,4 +157,3 @@ system(paste0("fordead sensitivity_analysis(testing_directory = ", sensitivity_d
               update_masked_vi = False,
               args_to_test = args_to_test,
               overwrite = False))
-)
