@@ -67,8 +67,6 @@ install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     pacman \
     remotes \
     raster \
-    rgdal \
-    rgeos \
     rlas \
     sf \
     sp \
