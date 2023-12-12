@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # always set this for scripts but don't declare as ENV..
@@ -67,8 +67,11 @@ install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     pacman \
     remotes \
     raster \
+    rgdal \
+    rgeos \
     rlas \
     sf \
+    sfarrow \
     sp \
     spacetime \
     spatstat \
