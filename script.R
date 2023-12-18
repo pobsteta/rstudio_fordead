@@ -9,7 +9,7 @@ date_end <- as.character(Sys.Date())
 dir.create(file.path(rep_in, species, "s2zip"), recursive = TRUE, showWarnings = FALSE)
 dir.create(file.path(rep_in, species, "extract"), recursive = TRUE, showWarnings = FALSE)
 dir.create(file.path(rep_in, species, "calc"), recursive = TRUE, showWarnings = FALSE)
-dir.create(file.path(rep_in, species, "extract", "year"), recursive = TRUE, showWarnings = FALSE)
+dir.create(file.path(rep_in, species, "extract", tuile), recursive = TRUE, showWarnings = FALSE)
 dir.create(file.path(rep_in, species, "final", tuile), recursive = TRUE, showWarnings = FALSE)
 dir.create(file.path(rep_in, species, "sensitivity", tuile), recursive = TRUE, showWarnings = FALSE)
 
