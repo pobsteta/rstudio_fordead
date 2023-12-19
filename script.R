@@ -18,9 +18,15 @@ dir.create(file.path(rep_in, species, "sensitivity", tuile), recursive = TRUE, s
 # etendu <- sf::read_sf(file.path(rep_in, species, "extent.gpkg"))
 
 ## telecharge les images S2 et dézippe les fichiers avec les bandes necessaires
-system(paste0("fordead theia_preprocess -i ", rep_in, "/", species, "/s2zip -o ", rep_in, "/", species, "/extract -t ", tuile, " --login_theia pascal.obstetar@gmail.com --password_theia Pobf6332! --start_date ", date_start, " --end_date ", date_end, " --lim_perc_cloud 45"))
-## libere la mémoire
-gc()
+## decoupe le telechargement par periode annuelle
+periode <- c(seq(from = as.Date(date_start), to = as.Date(date_end), by = "1 year"), date_end)
+for (i in head(seq_along(periode), - 1)){
+  message(paste("Telechargement de", periode[i], "à", periode[i+1]))
+  system(paste0("fordead theia_preprocess -i ", rep_in, "/", species, "/s2zip -o ", rep_in, "/", species, "/extract -t ", tuile, " --login_theia pascal.obstetar@gmail.com --password_theia Pobf6332! --start_date ", periode[i], " --end_date ", periode[i+1], " --lim_perc_cloud 45"))
+  ## libere la mémoire
+  gc()
+}
+
 
 ## on calcule les résultats à partir de l'année depuis 2018
 # 1/ Step 1 - Calcul de l'indice de végétation et des masques :
